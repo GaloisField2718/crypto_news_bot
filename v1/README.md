@@ -65,6 +65,54 @@ src/
 └── README.md            # Project documentation
 ```
 
+## Docker Setup
+
+### Prerequisites
+- Docker Desktop installed and running
+- Docker Compose installed
+
+### Running with Docker
+1. Build and start the container:
+```bash
+docker-compose up
+```
+
+2. Stop the container:
+```bash
+docker-compose down
+```
+
+### Docker Commands Reference
+- Rebuild the container after changes:
+```bash
+docker-compose up --build
+```
+
+- View container logs:
+```bash
+docker-compose logs
+```
+
+- Access container shell:
+```bash
+docker-compose exec irc-bot bash
+```
+
+### Troubleshooting
+- If you encounter credential issues, try:
+```bash
+docker login
+```
+
+- To reset Docker configuration:
+```bash
+docker-compose down -v
+```
+
+### Docker Files
+- `Dockerfile`: Contains the container configuration
+- `docker-compose.yml`: Defines the services, networks, and volumes
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
@@ -74,3 +122,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](../LICENSE) file for details.
 
 Copyright (C) 2024 GaloisField
+

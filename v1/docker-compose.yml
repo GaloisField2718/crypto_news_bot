@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  irc-bot:
+    build: .
+    container_name: irc-news-bot
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - bot-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0 if sys.version_info >= (3, 12) else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  bot-network:
+    driver: bridge

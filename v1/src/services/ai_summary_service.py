@@ -1,19 +1,29 @@
-"""
-IRC News Bot - A bot that monitors crypto-related news from IRC channels and forwards them to Telegram
-Copyright (C) 2024  GaloisField
+import openai
+from src.config import settings
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
-"""
-
- 
+class AISummaryService:
+    def __init__(self):
+        if not settings.OPENAI_API_KEY:
+            raise ValueError("Please set OPENAI_API_KEY in .env file")
+            
+        openai.api_key = settings.OPENAI_API_KEY
+    
+    def generate_summary(self, news_items):
+        """Generate an AI summary of multiple news items"""
+        try:
+            # Combine news items into a single text
+            combined_news = "\n".join([item['content'] for item in news_items])
+            
+            response = openai.ChatCompletion.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {"role": "system", "content": "You are a crypto news analyst. Summarize the following news items into a brief overview of key developments."},
+                    {"role": "user", "content": combined_news}
+                ],
+                max_tokens=150
+            )
+            
+            return response.choices[0].message.content
+        except Exception as e:
+            print(f"Error generating AI summary: {e}")
+            return None 
