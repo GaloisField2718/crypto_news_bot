@@ -1,0 +1,15 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+irc = "*"
+requests = "*"
+python-dotenv = "*"
+python-telegram-bot = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.12"
